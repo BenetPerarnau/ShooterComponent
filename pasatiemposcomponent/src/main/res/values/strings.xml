@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">GraficBenet</string>
+
+    <!--STATUS-->
+    <string name="kills_text_status">KILLS:</string>
+    <string name="shoots_text_status">SHOOTS:</string>
+    <string name="prp_text_status">STADISTIC:</string>
+</resources>

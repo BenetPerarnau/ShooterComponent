@@ -1,0 +1,11 @@
+<resources>
+    <declare-styleable name="ControlerPasatiemposView">
+
+        <attr name="imageLeft" format="reference"/>
+        <attr name="imageTop" format="reference"/>
+        <attr name="imageRight" format="reference"/>
+        <attr name="imageButton" format="reference"/>
+        <attr name="imageShoot" format="reference"/>
+
+    </declare-styleable>
+</resources>
