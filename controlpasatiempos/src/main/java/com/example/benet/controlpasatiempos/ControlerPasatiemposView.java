@@ -93,32 +93,36 @@ public class ControlerPasatiemposView extends LinearLayout implements View.OnCli
 
         a.recycle();
 
-        left.setOnTouchListener(new RepeatListener(400, 100, new OnClickListener() {
+        left.setOnTouchListener(new RepeatListener(400, 25, new OnClickListener() {
             @Override
             public void onClick(View view) {
                 // the code to execute repeatedly
                 puntero.moveCercleCordenadaX(-10);
+                modCrono();
             }
         }));
-        top.setOnTouchListener(new RepeatListener(400, 100, new OnClickListener() {
+        top.setOnTouchListener(new RepeatListener(400, 25, new OnClickListener() {
             @Override
             public void onClick(View view) {
                 // the code to execute repeatedly
                 puntero.moveCercleCordenadaY(-10);
+                modCrono();
             }
         }));
-        right.setOnTouchListener(new RepeatListener(400, 100, new OnClickListener() {
+        right.setOnTouchListener(new RepeatListener(400, 25, new OnClickListener() {
             @Override
             public void onClick(View view) {
                 // the code to execute repeatedly
                 puntero.moveCercleCordenadaX(10);
+                modCrono();
             }
         }));
-        button.setOnTouchListener(new RepeatListener(400, 100, new OnClickListener() {
+        button.setOnTouchListener(new RepeatListener(400, 25, new OnClickListener() {
             @Override
             public void onClick(View view) {
                 // the code to execute repeatedly
                 puntero.moveCercleCordenadaY(10);
+                modCrono();
             }
         }));
 
@@ -160,8 +164,8 @@ public class ControlerPasatiemposView extends LinearLayout implements View.OnCli
         if(puntero!=null) {
 
             if (v.getId() == R.id.shoot) {
-
                 puntero.isKill();
+                modCrono();
             }else if(v.getId()==R.id.btn_start_pause_resum){
                 if(crono!=null) {
                     if (start_pause_resum.getText().toString().equalsIgnoreCase(getResources().getString(R.string.btn_start))) {
@@ -198,6 +202,27 @@ public class ControlerPasatiemposView extends LinearLayout implements View.OnCli
             Log.e("", "ControlerPasatiemposView don't have inizialitzate puntero. Call setPuntero().");
         }
 
+    }
+
+    public void modCrono(){
+        if(crono!=null &&
+           start_pause_resum.getText().toString().equalsIgnoreCase(getResources().getString(R.string.btn_start)) ||
+           start_pause_resum.getText().toString().equalsIgnoreCase(getResources().getString(R.string.btn_resum)) )
+        {
+
+            if (start_pause_resum.getText().toString().equalsIgnoreCase(getResources().getString(R.string.btn_start))) {
+                start_pause_resum.setText(getResources().getString(R.string.btn_pause));
+                crono.setPausado(false);
+            } else if (start_pause_resum.getText().toString().equalsIgnoreCase(getResources().getString(R.string.btn_pause))) {
+                start_pause_resum.setText(getResources().getString(R.string.btn_resum));
+                crono.setPausado(true);
+            } else if (start_pause_resum.getText().toString().equalsIgnoreCase(getResources().getString(R.string.btn_resum))) {
+                start_pause_resum.setText(getResources().getString(R.string.btn_pause));
+                crono.setPausado(false);
+            }
+        }else{
+            Log.e("","This class don't have inizializate atribute crono. Call setCrono()");
+        }
     }
 
 

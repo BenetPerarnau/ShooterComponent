@@ -34,10 +34,12 @@ public class MainActivity extends ActionBarActivity implements Puntero.NotificBy
         pasatiemposView.getSound().setPistaFondo(R.raw.pista_a);
         pasatiemposView.getSound().startSoundFondo();
 
+        //Set mListeners
         pasatiemposView.getPuntero().setOnNotificShoot(this);
         pasatiemposView.getStatus().setOnnotificStatusChange(this);
 
         controlerPasatiemposView=(ControlerPasatiemposView)findViewById(R.id.controler);
+
         controlerPasatiemposView.setPuntero(pasatiemposView.getPuntero());
         controlerPasatiemposView.setMusic(pasatiemposView.getSound());
         controlerPasatiemposView.setCrono(pasatiemposView.getCronometro());
@@ -80,7 +82,11 @@ public class MainActivity extends ActionBarActivity implements Puntero.NotificBy
     @Override
     public void statusChange(String kills, int valueKills, String shoots, int valueShoots, String parcentage, float valuePArcentage) {
         if(valueKills==5){
-            Toast.makeText(this,"Great you are kill 5 Gonzaliñus",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Well 5 deaths",Toast.LENGTH_LONG).show();
+        }else if(valueKills==10){
+            Toast.makeText(this,"Excellent 10 deaths",Toast.LENGTH_LONG).show();
+        }else if(valueKills==50){
+            Toast.makeText(this,"You are the best! 50 deaths",Toast.LENGTH_LONG).show();
         }
     }
 }

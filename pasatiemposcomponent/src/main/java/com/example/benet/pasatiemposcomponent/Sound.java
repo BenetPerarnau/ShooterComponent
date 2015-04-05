@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.media.MediaPlayer;
 import android.util.Log;
 
+import java.io.IOException;
+
 /**
  * Created by Benet on 21/03/15.
  */

@@ -14,13 +14,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 
-/**
- * TODO: document your custom view class.
- */
-public class pasatiemposView extends LinearLayout {
+public class pasatiemposView extends View {
 
     private final String TAG_COMPONENT=getResources().getString(R.string.app_name);
-
+    private boolean init;
     private int contentWidth, contentHeight;
 
     //Variables para el pincel
@@ -36,7 +33,6 @@ public class pasatiemposView extends LinearLayout {
     private Diana diana;
     //3)Sounds app
     private Sound sound;
-
 
     //1)Ttile
     private String titleComponent;
@@ -94,6 +90,7 @@ public class pasatiemposView extends LinearLayout {
         //colorText_status =Color.BLACK;
 
             //findViewById()
+        init=true;
 
         a.recycle();
 
@@ -155,52 +152,41 @@ public class pasatiemposView extends LinearLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int paddingLeft = getPaddingLeft();                                                         Log.i(TAG_COMPONENT, "Padding left => " + paddingLeft);
-        int paddingTop = getPaddingTop();                                                           Log.i(TAG_COMPONENT,"Padding top => "+paddingTop);
-        int paddingRight = getPaddingRight();                                                       Log.i(TAG_COMPONENT,"Pading Right => "+paddingRight);
-        int paddingBottom = getPaddingBottom();                                                     Log.i(TAG_COMPONENT,"Pading Bottom => "+paddingBottom);
+           int paddingLeft = getPaddingLeft(); Log.i(TAG_COMPONENT, "Padding left => " + paddingLeft);
+           int paddingTop = getPaddingTop(); Log.i(TAG_COMPONENT, "Padding top => " + paddingTop);
+           int paddingRight = getPaddingRight();Log.i(TAG_COMPONENT, "Pading Right => " + paddingRight);
+           int paddingBottom = getPaddingBottom();Log.i(TAG_COMPONENT, "Pading Bottom => " + paddingBottom);
 
-        contentWidth = getWidth() - paddingLeft - paddingRight;                                     Log.i(TAG_COMPONENT,"ContentWidth => "+contentWidth);
-        contentHeight = getHeight() - paddingTop - paddingBottom;                                   Log.i(TAG_COMPONENT,"ContentHeight => "+contentHeight);
+           contentWidth = getWidth() - paddingLeft - paddingRight;Log.i(TAG_COMPONENT, "ContentWidth => " + contentWidth);
+           contentHeight = getHeight() - paddingTop - paddingBottom;Log.i(TAG_COMPONENT, "ContentHeight => " + contentHeight);
 
-//        int leng_title=titleComponent.length();                                                     Log.i(TAG_COMPONENT,"Text length => "+leng_title);
-
-        int center_width=contentWidth/2;                                                            Log.i(TAG_COMPONENT,"Center width => "+center_width);
-        int center_height=contentHeight/2;                                                          Log.i(TAG_COMPONENT,"Center Height => "+center_height);
-       // int cXText=center_width-leng_title/2;                                                       Log.i(TAG_COMPONENT,"Cordenada x Title => "+cXText);
+           int center_width = contentWidth / 2; Log.i(TAG_COMPONENT, "Center width => " + center_width);
+           int center_height = contentHeight / 2; Log.i(TAG_COMPONENT, "Center Height => " + center_height);
 
 
+           //TODO mirar de imprimir en dos veces para poder cambiar el pincel
+           canvas.drawText(status.getKILLS() + status.getValue_kills_status(), contentWidth - status.getPaintTextStatus().measureText(status.getKILLS() + status.getValue_kills_status()) - status.getMarginRight(), 30, status.getPaintTextStatus());
+           canvas.drawText(status.getSHOOT() + status.getValue_shoots_status(), contentWidth - status.getPaintTextStatus().measureText(status.getSHOOT() + status.getValue_shoots_status()) - status.getMarginRight(), 60, status.getPaintTextStatus());
+           canvas.drawText(status.getENCERTS() + status.getValue_encerts_status() + "%", contentWidth - status.getPaintTextStatus().measureText(status.getENCERTS() + status.getValue_encerts_status() + "%") - status.getMarginRight(), 90, status.getPaintTextStatus());
+           canvas.drawText(status.getCrono(), contentWidth / 2 - status.getPaintTextStatus().measureText(status.getCrono()) / 2, 50, status.getPaintTextCrono());
 
+           //Paint Diana
+           if (diana.getcXB() == -1) {//donde se va a poner al iniciar
+               diana.setcXB(center_width - diana.getImg_diana().getWidth() / 2);
+               diana.setcYB(center_height - diana.getImg_diana().getHeight() / 2);
+           }
+           canvas.drawBitmap(diana.getImg_diana(), diana.getcXB(), diana.getcYB(), null);
 
-
-       // if(paintTitle !=null)canvas.drawText(titleComponent,0,200, paintTitle);
-
-        //TODO mirar de imprimir en dos veces para poder cambiar el pincel
-        canvas.drawText(status.getKILLS()+ status.getValue_kills_status(),contentWidth-status.getPaintTextStatus().measureText(status.getKILLS()+status.getValue_kills_status())-status.getMarginRight(),30, status.getPaintTextStatus());
-        canvas.drawText(status.getSHOOT()+ status.getValue_shoots_status(),contentWidth-status.getPaintTextStatus().measureText(status.getSHOOT()+ status.getValue_shoots_status())-status.getMarginRight(),60, status.getPaintTextStatus());
-        canvas.drawText(status.getENCERTS()+status.getValue_encerts_status() +"%",contentWidth-status.getPaintTextStatus().measureText(status.getENCERTS()+status.getValue_encerts_status() +"%")-status.getMarginRight(),90, status.getPaintTextStatus());
-        Log.i("CRONO CANVAS",status.getCrono());
-        if(!status.getCrono().equalsIgnoreCase("00:00:00"))canvas.drawText(status.getCrono(),contentWidth/2-status.getPaintTextStatus().measureText(status.getCrono())/2,50,status.getPaintTextCrono());
-
-        //Paint Diana
-        if(diana.getcXB()==-1){//donde se va a poner al iniciar
-            diana.setcXB(center_width-diana.getImg_diana().getWidth()/2);
-            diana.setcYB(center_height-diana.getImg_diana().getHeight()/2);
-        }
-        canvas.drawBitmap(diana.getImg_diana(), diana.getcXB(), diana.getcYB(), null);
-
-        //Paint puntero
-        if(puntero.getcXC()==-1){//donde se va a poner al iniciar
-            puntero.setcXC(contentWidth/2);
-            puntero.setcYC(contentHeight/2);
-           // puntero.setRadio((int)((float)contentWidth/(float)6));
-        }
-        canvas.drawCircle(puntero.getcXC(), puntero.getcYC(), puntero.getRadio(), puntero.getPaintCercle());
-        canvas.drawPoint(puntero.getcXC(), puntero.getcYC(), puntero.getPaintPunto());
-
-        //requestLayout();
-        invalidate();
-
+           //Paint puntero
+           if (puntero.getcXC() == -1) {//donde se va a poner al iniciar
+               puntero.setcXC(contentWidth / 2);
+               puntero.setcYC(contentHeight / 2);
+               // puntero.setRadio((int)((float)contentWidth/(float)6));
+           }
+           canvas.drawCircle(puntero.getcXC(), puntero.getcYC(), puntero.getRadio(), puntero.getPaintCercle());
+           canvas.drawPoint(puntero.getcXC(), puntero.getcYC(), puntero.getPaintPunto());
+        //TODO esto esta mal ya lo se pero no consigo refrescar el corno desde un thread diferente
+        invalidate();//Unica forma de que funcione el crono
     }
     /*
            SETERS and get TITLE COMPONENT
@@ -246,7 +232,6 @@ public class pasatiemposView extends LinearLayout {
     public Sound getSound(){
         return sound;
     }
-
     public void  repaintComponent(){
         requestLayout();
         //invalidate();

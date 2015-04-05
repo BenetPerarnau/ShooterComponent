@@ -44,11 +44,11 @@ public class Status {
     }
 
     public void initComponents(){
-        crono="00:00:00";
+        crono="00:00:00:00";
         marginRight=16;
         value_kills_status =0;
         value_shoots_status =0;
-        value_encerts_status =100;
+        value_encerts_status =(float)100.00;
         size_texts_status=25;
         size_values_status=30;
         size_text_crono=35;
@@ -83,9 +83,11 @@ public class Status {
         value_shoots_status++;
     }
     public void refeshPPEncerts(){
-        value_encerts_status =(((float) value_kills_status /(float) value_shoots_status)*100);
+        value_encerts_status =(((float) value_kills_status /(float) value_shoots_status));
         try {
-            value_encerts_status = Float.parseFloat(f.format(value_encerts_status));
+            String aux=f.format(value_encerts_status);
+            aux=aux.replace(",",".");
+            value_encerts_status = Float.parseFloat(aux)*100;
         }catch(NumberFormatException e){
             Log.e("Format % encerts", "" + e.getMessage());
         }
@@ -139,6 +141,7 @@ public class Status {
         this.crono=crono;
         //context.onMeasure(context.getContentWidth(), context.getContentHeight());
         //context.onDraw(new Canvas());
+
         context.repaintComponent();
     }
 
